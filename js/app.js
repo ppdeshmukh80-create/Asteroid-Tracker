@@ -12,6 +12,15 @@ async function init() {
     console.log(`historical records loaded: ${historicalCount}`);
     console.log(`future records loaded: ${futureCount}`);
     console.log(`total records loaded: ${totalCount}`);
+
+    const normalizedHistorical = normalizeDataset(historical, 'historical');
+    const normalizedFuture = normalizeDataset(future, 'future');
+
+    console.log(`normalized historical records: ${normalizedHistorical.length}`);
+    console.log(`normalized future records: ${normalizedFuture.length}`);
+    console.log(`total normalized records: ${normalizedHistorical.length + normalizedFuture.length}`);
+    console.log('sample normalized historical record:', normalizedHistorical[0]);
+    console.log('sample normalized future record:', normalizedFuture[0]);
   } catch (error) {
     console.error('problem loading NASA data:', error.message);
   }
