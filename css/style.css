@@ -51,6 +51,47 @@ main {
   font-size: 0.95rem;
 }
 
+/* data coverage note */
+.data-coverage-note {
+  text-align: center;
+  color: #9aa4c0;
+  font-size: 0.85rem;
+  margin-bottom: 20px;
+}
+
+/* date filter controls */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 30px;
+  color: #c9d1f0;
+  font-size: 0.9rem;
+}
+
+.filters input[type="date"] {
+  background-color: #151c33;
+  color: #e6e6e6;
+  border: 1px solid #2c3660;
+  border-radius: 6px;
+  padding: 6px 10px;
+}
+
+.filters button {
+  background-color: #151c33;
+  color: #e6e6e6;
+  border: 1px solid #2c3660;
+  border-radius: 6px;
+  padding: 6px 14px;
+  cursor: pointer;
+}
+
+.filters button:hover {
+  background-color: #1a2240;
+}
+
 /* summary cards area, filled in once the data loads */
 .summary-cards {
   min-height: 60px;
@@ -80,10 +121,84 @@ main {
   color: #ffffff;
 }
 
-/* data table area, will hold the table in a later phase */
+/* data table area, filled in once the data loads */
 .data-table-section {
   min-height: 60px;
   margin-bottom: 30px;
+}
+
+.table-note {
+  color: #9aa4c0;
+  font-size: 0.85rem;
+  margin-bottom: 10px;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  border: 1px solid #2c3660;
+  border-radius: 8px;
+}
+
+.asteroid-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+}
+
+.asteroid-table th,
+.asteroid-table td {
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid #2c3660;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.asteroid-table th {
+  background-color: #151c33;
+  color: #9aa4c0;
+  font-weight: normal;
+}
+
+.asteroid-table th.sortable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.asteroid-table th.sortable:hover {
+  color: #ffffff;
+}
+
+.asteroid-table tbody tr:hover {
+  background-color: #151c33;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 14px;
+  color: #c9d1f0;
+  font-size: 0.9rem;
+}
+
+.pagination button {
+  background-color: #151c33;
+  color: #e6e6e6;
+  border: 1px solid #2c3660;
+  border-radius: 6px;
+  padding: 6px 14px;
+  cursor: pointer;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: #1a2240;
+}
+
+.pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
 /* footer */

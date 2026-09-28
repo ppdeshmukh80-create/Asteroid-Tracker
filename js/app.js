@@ -22,8 +22,9 @@ async function init() {
     console.log('sample normalized historical record:', normalizedHistorical[0]);
     console.log('sample normalized future record:', normalizedFuture[0]);
 
-    const stats = buildSummaryStats(normalizedHistorical, normalizedFuture);
-    renderSummaryCards(stats);
+    const allRecords = normalizedHistorical.concat(normalizedFuture);
+    renderDataCoverageNote(allRecords);
+    initFilters(allRecords);
   } catch (error) {
     console.error('problem loading NASA data:', error.message);
 

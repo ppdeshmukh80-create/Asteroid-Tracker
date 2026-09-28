@@ -3,24 +3,31 @@
 function findClosestApproach(records) {
   const withDistance = records.filter((r) => typeof r.missDistanceAU === 'number');
   if (withDistance.length === 0) return null;
-  return withDistance.reduce((closest, r) => (r.missDistanceAU < closest.missDistanceAU ? r : closest));
+  return withDistance.reduce(
+    (closest, r) => (r.missDistanceAU < closest.missDistanceAU ? r : closest),
+    withDistance[0]
+  );
 }
 
 function findFastestObject(records) {
   const withSpeed = records.filter((r) => typeof r.relativeVelocityKmS === 'number');
   if (withSpeed.length === 0) return null;
-  return withSpeed.reduce((fastest, r) => (r.relativeVelocityKmS > fastest.relativeVelocityKmS ? r : fastest));
+  return withSpeed.reduce(
+    (fastest, r) => (r.relativeVelocityKmS > fastest.relativeVelocityKmS ? r : fastest),
+    withSpeed[0]
+  );
 }
 
-function buildSummaryStats(normalizedHistorical, normalizedFuture) {
-  const allRecords = normalizedHistorical.concat(normalizedFuture);
-  const closest = findClosestApproach(allRecords);
-  const fastest = findFastestObject(allRecords);
+function buildSummaryStats(records) {
+  const historicalCount = records.filter((r) => r.category === 'historical').length;
+  const futureCount = records.filter((r) => r.category === 'future').length;
+  const closest = findClosestApproach(records);
+  const fastest = findFastestObject(records);
 
   return {
-    totalCount: allRecords.length,
-    historicalCount: normalizedHistorical.length,
-    futureCount: normalizedFuture.length,
+    totalCount: records.length,
+    historicalCount,
+    futureCount,
     closestName: closest ? closest.fullname : 'Not available',
     closestDistance: closest ? `${closest.missDistanceAU.toFixed(6)} AU` : 'Not available',
     fastestName: fastest ? fastest.fullname : 'Not available',
