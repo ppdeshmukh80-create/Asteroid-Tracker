@@ -1,0 +1,73 @@
+/* basic reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background-color: #0b0f1a;
+  color: #e6e6e6;
+  line-height: 1.5;
+}
+
+/* header */
+.site-header {
+  text-align: center;
+  padding: 40px 20px;
+  background: linear-gradient(180deg, #10162b, #0b0f1a);
+  border-bottom: 1px solid #1f2740;
+}
+
+.site-header h1 {
+  font-size: 2rem;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+}
+
+.subtitle {
+  margin-top: 10px;
+  color: #9aa4c0;
+  font-size: 1rem;
+}
+
+/* main layout */
+main {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* disclaimer */
+.disclaimer {
+  background-color: #1a2240;
+  border: 1px solid #2c3660;
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-bottom: 30px;
+  text-align: center;
+  color: #c9d1f0;
+  font-size: 0.95rem;
+}
+
+/* summary cards area, will hold cards in a later phase */
+.summary-cards {
+  min-height: 60px;
+  margin-bottom: 30px;
+}
+
+/* data table area, will hold the table in a later phase */
+.data-table-section {
+  min-height: 60px;
+  margin-bottom: 30px;
+}
+
+/* footer */
+.site-footer {
+  text-align: center;
+  padding: 20px;
+  color: #7a84a3;
+  font-size: 0.85rem;
+  border-top: 1px solid #1f2740;
+}
