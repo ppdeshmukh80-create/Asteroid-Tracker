@@ -51,10 +51,33 @@ main {
   font-size: 0.95rem;
 }
 
-/* summary cards area, will hold cards in a later phase */
+/* summary cards area, filled in once the data loads */
 .summary-cards {
   min-height: 60px;
   margin-bottom: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.summary-card {
+  background-color: #151c33;
+  border: 1px solid #2c3660;
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+}
+
+.summary-card h3 {
+  font-size: 0.9rem;
+  color: #9aa4c0;
+  margin-bottom: 8px;
+  font-weight: normal;
+}
+
+.summary-card p {
+  font-size: 1.1rem;
+  color: #ffffff;
 }
 
 /* data table area, will hold the table in a later phase */
