@@ -39,11 +39,11 @@ function renderSummaryCards(stats) {
   const container = document.getElementById('summary-cards');
 
   const cards = [
-    { title: 'Total Close Approaches', value: stats.totalCount },
+    { title: 'Total Close Approaches', value: stats.totalCount.toLocaleString('en-US') },
     { title: 'Closest Approach', value: `${stats.closestName} — ${stats.closestDistance}` },
     { title: 'Fastest Object', value: `${stats.fastestName} — ${stats.fastestSpeed}` },
-    { title: 'Historical Records', value: stats.historicalCount },
-    { title: 'Upcoming Records', value: stats.futureCount }
+    { title: 'Historical Records', value: stats.historicalCount.toLocaleString('en-US') },
+    { title: 'Upcoming Records', value: stats.futureCount.toLocaleString('en-US') }
   ];
 
   container.innerHTML = cards

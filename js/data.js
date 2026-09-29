@@ -15,3 +15,7 @@ async function loadHistoricalData() {
 async function loadFutureData() {
   return loadJsonFile('futuredata.json');
 }
+
+
+
+
