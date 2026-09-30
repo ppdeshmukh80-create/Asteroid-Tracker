@@ -4,7 +4,8 @@ const filterState = {
   allRecords: [],
   startDate: null,
   endDate: null,
-  category: 'all'
+  category: 'all',
+  searchText: ''
 };
 
 function getRecordDate(record) {
@@ -46,8 +47,16 @@ function applyCategoryFilter(records) {
   return records.filter((record) => record.category === filterState.category);
 }
 
+function applySearchFilter(records) {
+  const searchText = filterState.searchText.trim().toLocaleLowerCase();
+  if (!searchText) return records;
+
+  return records.filter((record) => [record.designation, record.fullname]
+    .some((value) => typeof value === 'string' && value.toLocaleLowerCase().includes(searchText)));
+}
+
 function getFilteredRecords() {
-  return applyCategoryFilter(applyDateFilter(filterState.allRecords));
+  return applySearchFilter(applyCategoryFilter(applyDateFilter(filterState.allRecords)));
 }
 
 function updateDashboard() {
@@ -59,6 +68,11 @@ function updateDashboard() {
 function handleCategoryChange(category) {
   filterState.category = category;
   updateCategoryButtons();
+  updateDashboard();
+}
+
+function handleSearchInput(event) {
+  filterState.searchText = event.target.value;
   updateDashboard();
 }
 
@@ -111,6 +125,7 @@ function initFilters(allRecords) {
   document.getElementById('start-date-input').addEventListener('change', handleFilterChange);
   document.getElementById('end-date-input').addEventListener('change', handleFilterChange);
   document.getElementById('reset-filters-btn').addEventListener('click', handleResetFilters);
+  document.getElementById('asteroid-search').addEventListener('input', handleSearchInput);
 
   document.querySelectorAll('.category-btn').forEach((btn) => {
     btn.addEventListener('click', () => handleCategoryChange(btn.dataset.category));

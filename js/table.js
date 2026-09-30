@@ -116,6 +116,11 @@ function renderTable() {
   const container = document.getElementById('data-table-section');
   const sortedRecords = getSortedRecords();
 
+  if (sortedRecords.length === 0) {
+    container.innerHTML = '<p class="table-empty">No matching close approaches found.</p>';
+    return;
+  }
+
   const startIndex = (tableState.currentPage - 1) * ROWS_PER_PAGE;
   const rowsToShow = sortedRecords.slice(startIndex, startIndex + ROWS_PER_PAGE);
   const rowsHtml = rowsToShow.map(buildTableRow).join('');

@@ -150,6 +150,30 @@ main {
   color: #ffffff;
 }
 
+.search-control {
+  display: grid;
+  gap: 6px;
+  max-width: 420px;
+  margin: 0 0 14px;
+  color: #c9d1f0;
+  font-size: 0.9rem;
+}
+
+.search-control input {
+  width: 100%;
+  background-color: #151c33;
+  color: #e6e6e6;
+  border: 1px solid #2c3660;
+  border-radius: 6px;
+  padding: 9px 12px;
+  font: inherit;
+}
+
+.search-control input:focus {
+  outline: 2px solid #7187da;
+  outline-offset: 2px;
+}
+
 /* data table area, filled in once the data loads */
 .data-table-section {
   min-height: 60px;
