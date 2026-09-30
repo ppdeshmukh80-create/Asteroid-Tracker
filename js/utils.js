@@ -3,6 +3,16 @@ const KILOMETERS_PER_MILE = 1.609344;
 const KILOMETERS_PER_LUNAR_DISTANCE = 384400;
 const MILES_PER_KILOMETER_PER_SECOND = 2236.936;
 
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, (character) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  })[character]);
+}
+
 function formatDistanceFromAU(distanceAU) {
   if (typeof distanceAU !== 'number' || !Number.isFinite(distanceAU)) return 'Not available';
 

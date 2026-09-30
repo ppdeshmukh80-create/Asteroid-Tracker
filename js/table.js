@@ -18,18 +18,20 @@ const tableState = {
 };
 
 function formatStatus(category) {
-  return category === 'historical' ? 'Historical' : 'Upcoming';
+  if (category === 'historical') return 'Historical';
+  if (category === 'future') return 'Upcoming';
+  return 'Not available';
 }
 
 function buildTableRow(record, recordIndex) {
   return `
     <tr>
-      <td>${record.fullname}</td>
-      <td>${record.approachDate}</td>
+      <td>${escapeHtml(record.fullname)}</td>
+      <td>${escapeHtml(record.approachDate)}</td>
       <td>${formatDistanceFromAU(record.missDistanceAU)}</td>
       <td>${formatVelocityFromKmPerSecond(record.relativeVelocityKmS)}</td>
       <td>${formatStatus(record.category)}</td>
-      <td><button class="view-details-btn" type="button" data-record-index="${recordIndex}">View details</button></td>
+      <td><button class="view-details-btn" type="button" data-record-index="${recordIndex}" aria-label="View details for ${escapeHtml(record.fullname)}">View details</button></td>
     </tr>
   `;
 }
@@ -127,7 +129,7 @@ function renderTable() {
   const sortedRecords = getSortedRecords();
 
   if (sortedRecords.length === 0) {
-    container.innerHTML = '<p class="table-empty">No matching close approaches found.</p>';
+    container.innerHTML = '<p class="table-empty" role="status">No matching close approaches found.</p>';
     return;
   }
 

@@ -1,7 +1,7 @@
 // works out the summary stats shown in the dashboard cards
 
 function findClosestApproach(records) {
-  const withDistance = records.filter((r) => typeof r.missDistanceAU === 'number');
+  const withDistance = records.filter((r) => typeof r.missDistanceAU === 'number' && Number.isFinite(r.missDistanceAU));
   if (withDistance.length === 0) return null;
   return withDistance.reduce(
     (closest, r) => (r.missDistanceAU < closest.missDistanceAU ? r : closest),
@@ -10,7 +10,7 @@ function findClosestApproach(records) {
 }
 
 function findFastestObject(records) {
-  const withSpeed = records.filter((r) => typeof r.relativeVelocityKmS === 'number');
+  const withSpeed = records.filter((r) => typeof r.relativeVelocityKmS === 'number' && Number.isFinite(r.relativeVelocityKmS));
   if (withSpeed.length === 0) return null;
   return withSpeed.reduce(
     (fastest, r) => (r.relativeVelocityKmS > fastest.relativeVelocityKmS ? r : fastest),
@@ -50,8 +50,8 @@ function renderSummaryCards(stats) {
     <h2 class="visually-hidden" id="summary-heading">Summary statistics</h2>
     ${cards.map((card) => `
       <div class="summary-card">
-        <h3>${card.title}</h3>
-        <p>${card.value}</p>
+        <h3>${escapeHtml(card.title)}</h3>
+        <p>${escapeHtml(card.value)}</p>
       </div>
     `).join('')}
   `;
