@@ -3,13 +3,15 @@
 const filterState = {
   allRecords: [],
   startDate: null,
-  endDate: null
+  endDate: null,
+  category: 'all'
 };
 
 function getRecordDate(record) {
   const date = new Date(record.approachDate);
   return isNaN(date.getTime()) ? null : date;
 }
+
 
 // shows the earliest and latest close approach dates in the loaded data
 function renderDataCoverageNote(records) {
@@ -39,10 +41,32 @@ function applyDateFilter(records) {
   });
 }
 
+function applyCategoryFilter(records) {
+  if (filterState.category === 'all') return records;
+  return records.filter((record) => record.category === filterState.category);
+}
+
+function getFilteredRecords() {
+  return applyCategoryFilter(applyDateFilter(filterState.allRecords));
+}
+
 function updateDashboard() {
-  const filtered = applyDateFilter(filterState.allRecords);
+  const filtered = getFilteredRecords();
   renderSummaryCards(buildSummaryStats(filtered));
   renderAsteroidTable(filtered);
+}
+
+function handleCategoryChange(category) {
+  filterState.category = category;
+  updateCategoryButtons();
+  updateDashboard();
+}
+
+// highlights whichever category button is active
+function updateCategoryButtons() {
+  document.querySelectorAll('.category-btn').forEach((btn) => {
+    btn.classList.toggle('active', btn.dataset.category === filterState.category);
+  });
 }
 
 function handleFilterChange() {
@@ -88,10 +112,15 @@ function initFilters(allRecords) {
   document.getElementById('end-date-input').addEventListener('change', handleFilterChange);
   document.getElementById('reset-filters-btn').addEventListener('click', handleResetFilters);
 
+  document.querySelectorAll('.category-btn').forEach((btn) => {
+    btn.addEventListener('click', () => handleCategoryChange(btn.dataset.category));
+  });
+
   const defaults = getDefaultDateRange();
   setDateInputs(defaults.start, defaults.end);
   filterState.startDate = defaults.start;
   filterState.endDate = defaults.end;
 
+  updateCategoryButtons();
   updateDashboard();
 }
