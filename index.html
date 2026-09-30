@@ -3,68 +3,71 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NASA/JPL Near-Earth Asteroid Explorer</title>
+  <title>Asteroid Tracker</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
   <header class="site-header">
-    <h1>NASA/JPL Near-Earth Asteroid Explorer</h1>
-    <p class="subtitle">Explore official NASA/JPL asteroid close-approach data in a simpler way.</p>
+    <h1>Asteroid Tracker</h1>
+    <p class="project-name">NASA/JPL Near-Earth Asteroid Explorer</p>
   </header>
 
 
 
   <main>
-    <section class="disclaimer">
-      <p>Close approach does not mean an asteroid is predicted to impact Earth.</p>
-    </section>
-
-    <p class="data-coverage-note" id="data-coverage-note"></p>
-
-    <div class="category-selector">
-      <button class="category-btn" data-category="all">All Approaches</button>
-      <button class="category-btn" data-category="historical">Historical Approaches</button>
-      <button class="category-btn" data-category="future">Upcoming Approaches</button>
+    <div class="data-context">
+      <p class="data-coverage-note" id="data-coverage-note"></p>
+      <p class="disclaimer">Close approach does not mean an asteroid is predicted to impact Earth.</p>
     </div>
 
-    <section class="filters" id="filters">
-      <label for="start-date-input">Start Date</label>
-      <input type="date" id="start-date-input">
+    <div class="dashboard-controls">
+      <div class="category-selector">
+        <button class="category-btn" data-category="all">All Approaches</button>
+        <button class="category-btn" data-category="historical">Historical Approaches</button>
+        <button class="category-btn" data-category="future">Upcoming Approaches</button>
+      </div>
 
-      <label for="end-date-input">End Date</label>
-      <input type="date" id="end-date-input">
+      <section class="filters" id="filters">
+        <label for="start-date-input">Start Date</label>
+        <input type="date" id="start-date-input">
 
-      <button id="reset-filters-btn">Reset Filters</button>
-    </section>
+        <label for="end-date-input">End Date</label>
+        <input type="date" id="end-date-input">
+
+        <button id="reset-filters-btn">Reset Filters</button>
+      </section>
+    </div>
 
     <section class="summary-cards" id="summary-cards">
       <!-- summary cards will go here in a later phase -->
     </section>
 
-    <section class="chart-section" aria-labelledby="closest-chart-title">
-      <h2 id="closest-chart-title">Closest Approaches</h2>
-      <div class="chart-container">
-        <canvas id="closest-approaches-chart" role="img" aria-label="Bar chart of the closest asteroid approaches by miss distance in astronomical units"></canvas>
-        <p id="closest-chart-empty" role="status" hidden></p>
-      </div>
-    </section>
+    <div class="dashboard-charts">
+      <section class="chart-section" aria-labelledby="closest-chart-title">
+        <h2 id="closest-chart-title">Closest Approaches</h2>
+        <div class="chart-container">
+          <canvas id="closest-approaches-chart" role="img" aria-label="Bar chart of the closest asteroid approaches by distance from Earth in kilometers"></canvas>
+          <p id="closest-chart-empty" role="status" hidden></p>
+        </div>
+      </section>
 
-    <section class="chart-section" aria-labelledby="fastest-chart-title">
-      <h2 id="fastest-chart-title">Fastest Objects</h2>
-      <div class="chart-container">
-        <canvas id="fastest-objects-chart" role="img" aria-label="Bar chart of the fastest asteroid close approaches by relative velocity in kilometers per second"></canvas>
-        <p id="fastest-chart-empty" role="status" hidden></p>
-      </div>
-    </section>
+      <section class="chart-section" aria-labelledby="fastest-chart-title">
+        <h2 id="fastest-chart-title">Fastest Objects</h2>
+        <div class="chart-container">
+          <canvas id="fastest-objects-chart" role="img" aria-label="Bar chart of the fastest asteroid close approaches by relative velocity in kilometers per second"></canvas>
+          <p id="fastest-chart-empty" role="status" hidden></p>
+        </div>
+      </section>
 
-    <section class="chart-section" aria-labelledby="timeline-chart-title">
-      <h2 id="timeline-chart-title">Close Approaches Over Time</h2>
-      <div class="chart-container">
-        <canvas id="approaches-over-time-chart" role="img" aria-label="Bar chart of close approach counts grouped over time"></canvas>
-        <p id="timeline-chart-empty" role="status" hidden></p>
-      </div>
-    </section>
+      <section class="chart-section timeline-chart" aria-labelledby="timeline-chart-title">
+        <h2 id="timeline-chart-title">Close Approaches Over Time</h2>
+        <div class="chart-container">
+          <canvas id="approaches-over-time-chart" role="img" aria-label="Bar chart of close approach counts grouped over time"></canvas>
+          <p id="timeline-chart-empty" role="status" hidden></p>
+        </div>
+      </section>
+    </div>
 
     <div class="search-control">
       <label for="asteroid-search">Search asteroid name or designation</label>

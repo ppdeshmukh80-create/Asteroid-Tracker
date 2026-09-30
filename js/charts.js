@@ -44,7 +44,7 @@ function renderClosestApproachesChart(records) {
     if (typeof record.fullname === 'string' && record.fullname !== 'Not available') return record.fullname;
     return record.designation || 'Not available';
   });
-  const distances = closestRecords.map((record) => record.missDistanceAU);
+  const distances = closestRecords.map((record) => record.missDistanceAU * KILOMETERS_PER_AU);
 
   const chartOptions = {
     indexAxis: 'y',
@@ -54,17 +54,17 @@ function renderClosestApproachesChart(records) {
       legend: { display: false },
       tooltip: {
         callbacks: {
-          label: (context) => `${context.parsed.x.toLocaleString('en-US', { maximumFractionDigits: 6 })} AU`
+          label: (context) => `${context.parsed.x.toLocaleString('en-US', { maximumFractionDigits: 0 })} km`
         }
       }
     },
     scales: {
       x: {
         beginAtZero: true,
-        title: { display: true, text: 'Miss distance (AU)', color: '#c9d1f0' },
+        title: { display: true, text: 'Distance from Earth (km)', color: '#c9d1f0' },
         ticks: {
           color: '#9aa4c0',
-          callback: (value) => Number(value).toLocaleString('en-US', { maximumFractionDigits: 6 })
+          callback: (value) => Number(value).toLocaleString('en-US', { maximumFractionDigits: 0 })
         },
         grid: { color: 'rgba(154, 164, 192, 0.15)' }
       },
@@ -87,7 +87,7 @@ function renderClosestApproachesChart(records) {
     data: {
       labels,
       datasets: [{
-        label: 'Miss distance (AU)',
+        label: 'Distance from Earth (km)',
         data: distances,
         backgroundColor: '#54c7bb',
         borderColor: '#7be1d6',
@@ -156,7 +156,7 @@ function renderFastestObjectsChart(records) {
     scales: {
       x: {
         beginAtZero: true,
-        title: { display: true, text: 'Relative velocity (km/s)', color: '#c9d1f0' },
+        title: { display: true, text: 'Speed relative to Earth (km/s)', color: '#c9d1f0' },
         ticks: {
           color: '#9aa4c0',
           callback: (value) => `${Number(value).toLocaleString('en-US', { maximumFractionDigits: 2 })} km/s`
@@ -182,7 +182,7 @@ function renderFastestObjectsChart(records) {
     data: {
       labels,
       datasets: [{
-        label: 'Relative velocity (km/s)',
+        label: 'Speed relative to Earth (km/s)',
         data: velocities,
         backgroundColor: '#e79b5a',
         borderColor: '#ffc58d',

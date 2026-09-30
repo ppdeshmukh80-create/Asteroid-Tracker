@@ -143,9 +143,9 @@ function renderTable() {
           <tr>
             <th>Asteroid / Object</th>
             <th class="sortable${getSortHeaderClass('date')}" data-column="date" aria-sort="${getSortAriaValue('date')}">Close Approach Date${getSortArrow('date')}</th>
-            <th class="sortable${getSortHeaderClass('distance')}" data-column="distance" aria-sort="${getSortAriaValue('distance')}">Miss Distance${getSortArrow('distance')}</th>
-            <th class="sortable${getSortHeaderClass('velocity')}" data-column="velocity" aria-sort="${getSortAriaValue('velocity')}">Relative Velocity${getSortArrow('velocity')}</th>
-            <th>Status</th>
+            <th class="sortable${getSortHeaderClass('distance')}" data-column="distance" aria-sort="${getSortAriaValue('distance')}">Miss Distance from Earth${getSortArrow('distance')}</th>
+            <th class="sortable${getSortHeaderClass('velocity')}" data-column="velocity" aria-sort="${getSortAriaValue('velocity')}">Speed Relative to Earth${getSortArrow('velocity')}</th>
+            <th>Historical / Upcoming</th>
           </tr>
         </thead>
         <tbody>
