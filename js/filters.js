@@ -75,6 +75,7 @@ function updateDashboard() {
   renderSummaryCards(buildSummaryStats(filtered));
   renderClosestApproachesChart(filtered);
   renderFastestObjectsChart(filtered);
+  renderApproachesOverTimeChart(filtered);
   renderAsteroidTable(filtered);
 }
 
