@@ -50,8 +50,8 @@ This dashboard uses a locally stored snapshot of NASA/JPL data and does not retr
 
 The current files cover:
 
-- Historical data: Aug 23, 2016 to Aug 14, 2026
-- Upcoming data: Aug 15, 2026 to Aug 14, 2036
+- Historical data: Sep 30, 2016 to Sep 28, 2026
+- Upcoming data: Sep 30, 2026 to Sep 28, 2036
 
 These ranges are calculated from the dates in the loaded files and may change when the snapshots are updated.
 
