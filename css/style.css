@@ -12,6 +12,23 @@ body {
   line-height: 1.5;
 }
 
+:focus-visible {
+  outline: 3px solid #d6e0ff;
+  outline-offset: 2px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* header */
 .site-header {
   text-align: center;
@@ -209,7 +226,7 @@ main {
   border-radius: 8px;
 }
 
-.chart-container p {
+.chart-container p:not(.visually-hidden) {
   display: grid;
   height: 100%;
   place-items: center;
@@ -284,16 +301,21 @@ main {
   font-weight: normal;
 }
 
-.asteroid-table th.sortable {
+.sort-button {
+  padding: 0;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  font: inherit;
+  text-align: left;
   cursor: pointer;
-  user-select: none;
 }
 
-.asteroid-table th.sortable:hover {
+.sort-button:hover {
   color: #ffffff;
 }
 
-.asteroid-table th.sortable.sorted {
+.sort-button.sorted {
   color: #ffffff;
 }
 

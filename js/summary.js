@@ -46,12 +46,13 @@ function renderSummaryCards(stats) {
     { title: 'Upcoming Records', value: stats.futureCount.toLocaleString('en-US') }
   ];
 
-  container.innerHTML = cards
-    .map((card) => `
+  container.innerHTML = `
+    <h2 class="visually-hidden" id="summary-heading">Summary statistics</h2>
+    ${cards.map((card) => `
       <div class="summary-card">
         <h3>${card.title}</h3>
         <p>${card.value}</p>
       </div>
-    `)
-    .join('');
+    `).join('')}
+  `;
 }

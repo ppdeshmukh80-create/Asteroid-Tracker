@@ -140,14 +140,15 @@ function renderTable() {
     ${buildPaginationControls()}
     <div class="table-wrapper">
       <table class="asteroid-table">
+        <caption class="visually-hidden">Close approach records matching the current filters</caption>
         <thead>
           <tr>
-            <th>Asteroid / Object</th>
-            <th class="sortable${getSortHeaderClass('date')}" data-column="date" aria-sort="${getSortAriaValue('date')}">Close Approach Date${getSortArrow('date')}</th>
-            <th class="sortable${getSortHeaderClass('distance')}" data-column="distance" aria-sort="${getSortAriaValue('distance')}">Miss Distance from Earth${getSortArrow('distance')}</th>
-            <th class="sortable${getSortHeaderClass('velocity')}" data-column="velocity" aria-sort="${getSortAriaValue('velocity')}">Speed Relative to Earth${getSortArrow('velocity')}</th>
-            <th>Historical / Upcoming</th>
-            <th>Details</th>
+            <th scope="col">Asteroid / Object</th>
+            <th scope="col" aria-sort="${getSortAriaValue('date')}"><button class="sort-button${getSortHeaderClass('date')}" type="button" data-column="date">Close Approach Date<span aria-hidden="true">${getSortArrow('date')}</span></button></th>
+            <th scope="col" aria-sort="${getSortAriaValue('distance')}"><button class="sort-button${getSortHeaderClass('distance')}" type="button" data-column="distance">Miss Distance from Earth<span aria-hidden="true">${getSortArrow('distance')}</span></button></th>
+            <th scope="col" aria-sort="${getSortAriaValue('velocity')}"><button class="sort-button${getSortHeaderClass('velocity')}" type="button" data-column="velocity">Speed Relative to Earth<span aria-hidden="true">${getSortArrow('velocity')}</span></button></th>
+            <th scope="col">Historical / Upcoming</th>
+            <th scope="col">Details</th>
           </tr>
         </thead>
         <tbody>
@@ -157,12 +158,12 @@ function renderTable() {
     </div>
   `;
 
-  container.querySelectorAll('.sortable').forEach((header) => {
-    header.addEventListener('click', () => handleHeaderClick(header.dataset.column));
+  container.querySelectorAll('.sort-button').forEach((button) => {
+    button.addEventListener('click', () => handleHeaderClick(button.dataset.column));
   });
 
   container.querySelectorAll('.view-details-btn').forEach((button) => {
-    button.addEventListener('click', () => openAsteroidDetails(sortedRecords[Number(button.dataset.recordIndex)]));
+    button.addEventListener('click', () => openAsteroidDetails(sortedRecords[Number(button.dataset.recordIndex)], button));
   });
 
   const prevBtn = document.getElementById('prev-page-btn');

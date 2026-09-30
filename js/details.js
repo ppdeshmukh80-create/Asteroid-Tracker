@@ -8,8 +8,12 @@ function setDetailValue(id, value) {
   document.getElementById(id).textContent = detailText(value);
 }
 
-function openAsteroidDetails(record) {
+const detailDialog = document.getElementById('asteroid-detail-dialog');
+let detailReturnFocus = null;
+
+function openAsteroidDetails(record, trigger) {
   if (!record) return;
+  detailReturnFocus = trigger || document.activeElement;
 
   const name = record.fullname !== 'Not available' ? record.fullname : record.designation;
   document.getElementById('detail-name').textContent = detailText(name);
@@ -24,11 +28,24 @@ function openAsteroidDetails(record) {
     ? `${record.diameterKm.toLocaleString('en-US', { maximumFractionDigits: 3 })} km`
     : 'Not available');
 
-  document.getElementById('asteroid-detail-dialog').showModal();
+  detailDialog.showModal();
 }
 
-const detailDialog = document.getElementById('asteroid-detail-dialog');
 document.getElementById('close-detail-dialog').addEventListener('click', () => detailDialog.close());
+detailDialog.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && detailDialog.open) {
+    event.preventDefault();
+    detailDialog.close();
+  }
+});
+detailDialog.addEventListener('cancel', (event) => {
+  event.preventDefault();
+  detailDialog.close();
+});
+detailDialog.addEventListener('close', () => {
+  if (detailReturnFocus && detailReturnFocus.isConnected) detailReturnFocus.focus();
+  detailReturnFocus = null;
+});
 detailDialog.addEventListener('click', (event) => {
   if (event.target === detailDialog) detailDialog.close();
 });

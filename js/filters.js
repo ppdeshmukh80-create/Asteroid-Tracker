@@ -108,7 +108,9 @@ function handleSearchInput(event) {
 // highlights whichever category button is active
 function updateCategoryButtons() {
   document.querySelectorAll('.category-btn').forEach((btn) => {
-    btn.classList.toggle('active', btn.dataset.category === filterState.category);
+    const isActive = btn.dataset.category === filterState.category;
+    btn.classList.toggle('active', isActive);
+    btn.setAttribute('aria-pressed', String(isActive));
   });
 }
 
