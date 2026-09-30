@@ -2,7 +2,7 @@
 
 ## Overview
 
-Asteroid Tracker is a small dashboard for exploring downloaded NASA/JPL asteroid close-approach data. It turns the local JSON records into summaries, charts, searchable results, and a table.
+Asteroid Explorer is a dashboard for exploring downloaded NASA/JPL asteroid close-approach data. It turns the local JSON records into summaries, charts, searchable results, and a table.
 
 ## Problem
 
@@ -101,11 +101,11 @@ python -m http.server 5500
 Then open `http://localhost:5500` in a browser.
 
 ## Live Demo
-https://ppdeshmukh80-create.github.io/Asteroid-Tracker/
+[Asteroid Explorer](https://ppdeshmukh80-create.github.io/Asteroid-Tracker/)
 
 ## Repository
 
-[Asteroid Tracker on GitHub](https://github.com/ppdeshmukh80-create/Asteroid-Tracker-)
+[Asteroid Explorer on GitHub](https://github.com/ppdeshmukh80-create/Asteroid-Tracker-)
 (develop branch)
 ## Notes
 
