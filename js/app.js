@@ -24,6 +24,7 @@ async function init() {
 
     const allRecords = normalizedHistorical.concat(normalizedFuture);
     renderDataCoverageNote(allRecords);
+    renderDatasetCoverage(normalizedHistorical, normalizedFuture);
     initFilters(allRecords);
   } catch (error) {
     console.error('problem loading NASA data:', error.message);

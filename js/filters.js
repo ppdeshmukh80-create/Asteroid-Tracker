@@ -41,6 +41,21 @@ function renderDataCoverageNote(records) {
   container.textContent = `Data covers close approaches from ${earliest.toLocaleDateString('en-US', options)} to ${latest.toLocaleDateString('en-US', options)}.`;
 }
 
+function formatDatasetCoverage(records) {
+  const dates = records.map(getRecordDate).filter((date) => date !== null);
+  if (dates.length === 0) return 'Not available';
+
+  const earliest = dates.reduce((first, date) => date < first ? date : first);
+  const latest = dates.reduce((last, date) => date > last ? date : last);
+  const options = { year: 'numeric', month: 'short', day: 'numeric' };
+  return `${earliest.toLocaleDateString('en-US', options)} to ${latest.toLocaleDateString('en-US', options)}`;
+}
+
+function renderDatasetCoverage(historicalRecords, futureRecords) {
+  document.getElementById('historical-data-range').textContent = formatDatasetCoverage(historicalRecords);
+  document.getElementById('future-data-range').textContent = formatDatasetCoverage(futureRecords);
+}
+
 function applyDateFilter(records) {
   if (!filterState.startDate && !filterState.endDate) return records;
 

@@ -78,6 +78,29 @@
       <!-- asteroid table will go here in a later phase -->
     </section>
 
+    <section class="about-section" id="about-data" aria-labelledby="about-data-title">
+      <h2 id="about-data-title">About the data</h2>
+      <div class="about-grid">
+        <article>
+          <h3>Close approaches</h3>
+          <p>A close approach means an object passes relatively near Earth. It does not mean the object is predicted to hit Earth.</p>
+        </article>
+        <article>
+          <h3>Measurements</h3>
+          <p>Miss distance is the separation between Earth and the object at closest approach. Relative velocity is their speed relative to each other at that time.</p>
+        </article>
+        <article>
+          <h3>Source and snapshot</h3>
+          <p>Data source: NASA/JPL Small-Body Database Close Approach Data API.</p>
+          <p>This dashboard uses a locally stored snapshot of NASA/JPL data and does not retrieve live data.</p>
+        </article>
+      </div>
+      <div class="dataset-coverage">
+        <p><strong>Historical data:</strong> <span id="historical-data-range">Not available</span></p>
+        <p><strong>Upcoming data:</strong> <span id="future-data-range">Not available</span></p>
+      </div>
+    </section>
+
     <dialog class="detail-dialog" id="asteroid-detail-dialog" aria-labelledby="detail-name">
       <div class="detail-dialog-content">
         <div class="detail-header">
