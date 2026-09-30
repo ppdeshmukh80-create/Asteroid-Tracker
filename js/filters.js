@@ -9,8 +9,19 @@ const filterState = {
 };
 
 function getRecordDate(record) {
-  const date = new Date(record.approachDate);
-  return isNaN(date.getTime()) ? null : date;
+  if (!record || typeof record.approachDate !== 'string') return null;
+
+  const match = /^(\d{4})-([A-Za-z]{3})-(\d{2})$/.exec(record.approachDate);
+  if (!match) return null;
+
+  const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].indexOf(match[2]);
+  if (month === -1) return null;
+
+  const year = Number(match[1]);
+  const day = Number(match[3]);
+  const date = new Date(year, month, day);
+  if (date.getFullYear() !== year || date.getMonth() !== month || date.getDate() !== day) return null;
+  return date;
 }
 
 
@@ -62,6 +73,7 @@ function getFilteredRecords() {
 function updateDashboard() {
   const filtered = getFilteredRecords();
   renderSummaryCards(buildSummaryStats(filtered));
+  renderClosestApproachesChart(filtered);
   renderAsteroidTable(filtered);
 }
 
@@ -87,36 +99,23 @@ function handleFilterChange() {
   const startValue = document.getElementById('start-date-input').value;
   const endValue = document.getElementById('end-date-input').value;
 
-  filterState.startDate = startValue ? new Date(startValue) : null;
-  filterState.endDate = endValue ? new Date(endValue) : null;
+  filterState.startDate = startValue ? new Date(`${startValue}T00:00:00`) : null;
+  filterState.endDate = endValue ? new Date(`${endValue}T00:00:00`) : null;
 
   updateDashboard();
 }
 
 function handleResetFilters() {
-  const defaults = getDefaultDateRange();
-  setDateInputs(defaults.start, defaults.end);
-  filterState.startDate = defaults.start;
-  filterState.endDate = defaults.end;
+  document.getElementById('start-date-input').value = '';
+  document.getElementById('end-date-input').value = '';
+  document.getElementById('asteroid-search').value = '';
+  filterState.startDate = null;
+  filterState.endDate = null;
+  filterState.searchText = '';
+  filterState.category = 'all';
+  resetTableSorting();
+  updateCategoryButtons();
   updateDashboard();
-}
-
-// formats a Date as yyyy-MM-dd for use in a date input
-function formatDateForInput(date) {
-  return date.toISOString().split('T')[0];
-}
-
-function setDateInputs(startDate, endDate) {
-  document.getElementById('start-date-input').value = formatDateForInput(startDate);
-  document.getElementById('end-date-input').value = formatDateForInput(endDate);
-}
-
-// default range: start of the current year through one year from today
-function getDefaultDateRange() {
-  const today = new Date();
-  const start = new Date(today.getFullYear(), 0, 1);
-  const end = new Date(today.getFullYear() + 1, today.getMonth(), today.getDate());
-  return { start, end };
 }
 
 function initFilters(allRecords) {
@@ -131,10 +130,8 @@ function initFilters(allRecords) {
     btn.addEventListener('click', () => handleCategoryChange(btn.dataset.category));
   });
 
-  const defaults = getDefaultDateRange();
-  setDateInputs(defaults.start, defaults.end);
-  filterState.startDate = defaults.start;
-  filterState.endDate = defaults.end;
+  document.getElementById('start-date-input').value = '';
+  document.getElementById('end-date-input').value = '';
 
   updateCategoryButtons();
   updateDashboard();

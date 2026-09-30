@@ -42,6 +42,14 @@
       <!-- summary cards will go here in a later phase -->
     </section>
 
+    <section class="chart-section" aria-labelledby="closest-chart-title">
+      <h2 id="closest-chart-title">Closest Approaches</h2>
+      <div class="chart-container">
+        <canvas id="closest-approaches-chart" role="img" aria-label="Bar chart of the closest asteroid approaches by miss distance in astronomical units"></canvas>
+        <p id="closest-chart-empty" role="status" hidden></p>
+      </div>
+    </section>
+
     <div class="search-control">
       <label for="asteroid-search">Search asteroid name or designation</label>
       <input type="search" id="asteroid-search" placeholder="e.g. 2016 QY84" autocomplete="off">
@@ -58,8 +66,11 @@
 
   <script src="js/data.js"></script>
   <script src="js/normalize.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
   <script src="js/summary.js"></script>
   <script src="js/table.js"></script>
+  <script src="js/charts.js"></script>
   <script src="js/filters.js"></script>
   <script src="js/app.js"></script>
 </body>

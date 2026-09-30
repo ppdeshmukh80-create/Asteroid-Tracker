@@ -17,25 +17,6 @@ const tableState = {
   sortDirection: 'asc'
 };
 
-// adds commas to large numbers, e.g. 12345 -> 12,345
-function formatNumber(value, decimals) {
-  if (typeof value !== 'number') return 'Not available';
-  return value.toLocaleString('en-US', {
-    minimumFractionDigits: decimals,
-    maximumFractionDigits: decimals
-  });
-}
-
-function formatDistance(value) {
-  if (typeof value !== 'number') return 'Not available';
-  return `${formatNumber(value, 6)} AU`;
-}
-
-function formatVelocity(value) {
-  if (typeof value !== 'number') return 'Not available';
-  return `${formatNumber(value, 2)} km/s`;
-}
-
 function formatStatus(category) {
   return category === 'historical' ? 'Historical' : 'Upcoming';
 }
@@ -45,11 +26,31 @@ function buildTableRow(record) {
     <tr>
       <td>${record.fullname}</td>
       <td>${record.approachDate}</td>
-      <td>${formatDistance(record.missDistanceAU)}</td>
-      <td>${formatVelocity(record.relativeVelocityKmS)}</td>
+      <td>${formatDistanceFromAU(record.missDistanceAU)}</td>
+      <td>${formatVelocityFromKmPerSecond(record.relativeVelocityKmS)}</td>
       <td>${formatStatus(record.category)}</td>
     </tr>
   `;
+}
+
+function getSortableValue(record, column) {
+  if (column !== 'date') {
+    const value = record[SORTABLE_COLUMNS[column]];
+    return typeof value === 'number' && Number.isFinite(value) ? value : null;
+  }
+
+  const match = /^(\d{4})-([A-Za-z]{3})-(\d{2})$/.exec(record.approachDate || '');
+  if (!match) return null;
+
+  const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].indexOf(match[2]);
+  if (month === -1) return null;
+
+  const year = Number(match[1]);
+  const day = Number(match[3]);
+  const timestamp = Date.UTC(year, month, day);
+  const date = new Date(timestamp);
+  if (date.getUTCFullYear() !== year || date.getUTCMonth() !== month || date.getUTCDate() !== day) return null;
+  return timestamp;
 }
 
 // returns a sorted copy, records with missing values end up at the bottom
@@ -57,12 +58,11 @@ function getSortedRecords() {
   const { sortColumn, sortDirection } = tableState;
   if (!sortColumn) return tableState.allRecords;
 
-  const field = SORTABLE_COLUMNS[sortColumn];
   return [...tableState.allRecords].sort((a, b) => {
-    const valueA = a[field];
-    const valueB = b[field];
-    const aMissing = typeof valueA !== 'number' && typeof valueA !== 'string';
-    const bMissing = typeof valueB !== 'number' && typeof valueB !== 'string';
+    const valueA = getSortableValue(a, sortColumn);
+    const valueB = getSortableValue(b, sortColumn);
+    const aMissing = valueA === null;
+    const bMissing = valueB === null;
 
     if (aMissing && bMissing) return 0;
     if (aMissing) return 1;
@@ -77,6 +77,15 @@ function getSortedRecords() {
 function getSortArrow(column) {
   if (tableState.sortColumn !== column) return '';
   return tableState.sortDirection === 'asc' ? ' ▲' : ' ▼';
+}
+
+function getSortHeaderClass(column) {
+  return tableState.sortColumn === column ? ' sorted' : '';
+}
+
+function getSortAriaValue(column) {
+  if (tableState.sortColumn !== column) return 'none';
+  return tableState.sortDirection === 'asc' ? 'ascending' : 'descending';
 }
 
 function handleHeaderClick(column) {
@@ -133,9 +142,9 @@ function renderTable() {
         <thead>
           <tr>
             <th>Asteroid / Object</th>
-            <th class="sortable" data-column="date">Close Approach Date${getSortArrow('date')}</th>
-            <th class="sortable" data-column="distance">Miss Distance${getSortArrow('distance')}</th>
-            <th class="sortable" data-column="velocity">Relative Velocity${getSortArrow('velocity')}</th>
+            <th class="sortable${getSortHeaderClass('date')}" data-column="date" aria-sort="${getSortAriaValue('date')}">Close Approach Date${getSortArrow('date')}</th>
+            <th class="sortable${getSortHeaderClass('distance')}" data-column="distance" aria-sort="${getSortAriaValue('distance')}">Miss Distance${getSortArrow('distance')}</th>
+            <th class="sortable${getSortHeaderClass('velocity')}" data-column="velocity" aria-sort="${getSortAriaValue('velocity')}">Relative Velocity${getSortArrow('velocity')}</th>
             <th>Status</th>
           </tr>
         </thead>
@@ -160,4 +169,10 @@ function renderAsteroidTable(records) {
   tableState.allRecords = records;
   tableState.currentPage = 1;
   renderTable();
+}
+
+function resetTableSorting() {
+  tableState.sortColumn = null;
+  tableState.sortDirection = 'asc';
+  tableState.currentPage = 1;
 }

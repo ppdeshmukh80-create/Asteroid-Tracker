@@ -29,9 +29,9 @@ function buildSummaryStats(records) {
     historicalCount,
     futureCount,
     closestName: closest ? closest.fullname : 'Not available',
-    closestDistance: closest ? `${closest.missDistanceAU.toFixed(6)} AU` : 'Not available',
+    closestDistance: closest ? formatDistanceFromAU(closest.missDistanceAU) : 'Not available',
     fastestName: fastest ? fastest.fullname : 'Not available',
-    fastestSpeed: fastest ? `${fastest.relativeVelocityKmS.toFixed(2)} km/s` : 'Not available'
+    fastestSpeed: fastest ? formatVelocityFromKmPerSecond(fastest.relativeVelocityKmS) : 'Not available'
   };
 }
 
