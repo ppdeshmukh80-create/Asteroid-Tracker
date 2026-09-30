@@ -1,6 +1,7 @@
 // renders the closest approaches chart from the current filtered records
 
 let closestApproachesChart = null;
+let fastestObjectsChart = null;
 
 function showClosestChartMessage(message) {
   const canvas = document.getElementById('closest-approaches-chart');
@@ -89,6 +90,101 @@ function renderClosestApproachesChart(records) {
         data: distances,
         backgroundColor: '#54c7bb',
         borderColor: '#7be1d6',
+        borderWidth: 1,
+        borderRadius: 3
+      }]
+    },
+    options: chartOptions
+  });
+}
+
+function showFastestChartMessage(message) {
+  const canvas = document.getElementById('fastest-objects-chart');
+  const emptyMessage = document.getElementById('fastest-chart-empty');
+
+  if (fastestObjectsChart) {
+    fastestObjectsChart.destroy();
+    fastestObjectsChart = null;
+  }
+
+  canvas.hidden = true;
+  emptyMessage.textContent = message;
+  emptyMessage.hidden = false;
+}
+
+function renderFastestObjectsChart(records) {
+  const canvas = document.getElementById('fastest-objects-chart');
+  const emptyMessage = document.getElementById('fastest-chart-empty');
+
+  if (typeof Chart === 'undefined') {
+    showFastestChartMessage('The chart could not be loaded.');
+    return;
+  }
+
+  const fastestRecords = records
+    .filter((record) => typeof record.relativeVelocityKmS === 'number' && Number.isFinite(record.relativeVelocityKmS))
+    .sort((first, second) => second.relativeVelocityKmS - first.relativeVelocityKmS)
+    .slice(0, 10);
+
+  if (fastestRecords.length === 0) {
+    showFastestChartMessage('No close approaches with velocity data match the current filters.');
+    return;
+  }
+
+  canvas.hidden = false;
+  emptyMessage.hidden = true;
+
+  const labels = fastestRecords.map((record) => {
+    if (typeof record.fullname === 'string' && record.fullname !== 'Not available') return record.fullname;
+    return record.designation || 'Not available';
+  });
+  const velocities = fastestRecords.map((record) => record.relativeVelocityKmS);
+
+  const chartOptions = {
+    indexAxis: 'y',
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: (context) => `${context.parsed.x.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} km/s`
+        }
+      }
+    },
+    scales: {
+      x: {
+        beginAtZero: true,
+        title: { display: true, text: 'Relative velocity (km/s)', color: '#c9d1f0' },
+        ticks: {
+          color: '#9aa4c0',
+          callback: (value) => `${Number(value).toLocaleString('en-US', { maximumFractionDigits: 2 })} km/s`
+        },
+        grid: { color: 'rgba(154, 164, 192, 0.15)' }
+      },
+      y: {
+        ticks: { color: '#c9d1f0' },
+        grid: { display: false }
+      }
+    }
+  };
+
+  if (fastestObjectsChart) {
+    fastestObjectsChart.data.labels = labels;
+    fastestObjectsChart.data.datasets[0].data = velocities;
+    fastestObjectsChart.update();
+    return;
+  }
+
+  fastestObjectsChart = new Chart(canvas, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        label: 'Relative velocity (km/s)',
+        data: velocities,
+        backgroundColor: '#e79b5a',
+        borderColor: '#ffc58d',
         borderWidth: 1,
         borderRadius: 3
       }]

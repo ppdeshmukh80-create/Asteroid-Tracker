@@ -74,6 +74,7 @@ function updateDashboard() {
   const filtered = getFilteredRecords();
   renderSummaryCards(buildSummaryStats(filtered));
   renderClosestApproachesChart(filtered);
+  renderFastestObjectsChart(filtered);
   renderAsteroidTable(filtered);
 }
 
