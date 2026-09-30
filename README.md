@@ -101,13 +101,12 @@ python -m http.server 5500
 Then open `http://localhost:5500` in a browser.
 
 ## Live Demo
-
-[Add the GitHub Pages URL here]
+https://ppdeshmukh80-create.github.io/Asteroid-Tracker/
 
 ## Repository
 
 [Asteroid Tracker on GitHub](https://github.com/ppdeshmukh80-create/Asteroid-Tracker-)
-
+(develop branch)
 ## Notes
 
 This is a static dashboard. To update its data, replace the local snapshots with new downloaded files and publish the changes to GitHub Pages.
