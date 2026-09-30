@@ -298,8 +298,98 @@ main {
   color: #ffffff;
 }
 
+.view-details-btn,
+.detail-close {
+  padding: 6px 10px;
+  color: #e6e6e6;
+  background: #1a2240;
+  border: 1px solid #3b4b77;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.view-details-btn:hover,
+.detail-close:hover {
+  background: #26345b;
+}
+
 .asteroid-table tbody tr:hover {
   background-color: #151c33;
+}
+
+.detail-dialog {
+  width: min(620px, calc(100vw - 32px));
+  max-height: min(80vh, 720px);
+  margin: auto;
+  padding: 0;
+  overflow: auto;
+  color: #e6e6e6;
+  background: #11182b;
+  border: 1px solid #3b4b77;
+  border-radius: 8px;
+}
+
+.detail-dialog::backdrop {
+  background: rgba(4, 8, 18, 0.78);
+}
+
+.detail-dialog-content {
+  padding: 24px;
+}
+
+.detail-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #2c3660;
+}
+
+.detail-kicker {
+  margin-bottom: 4px;
+  color: #9aa4c0;
+  font-size: 0.8rem;
+}
+
+.detail-header h2 {
+  color: #ffffff;
+  font-size: 1.35rem;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 24px;
+  padding: 8px 0 16px;
+}
+
+.detail-grid > div {
+  min-width: 0;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(44, 54, 96, 0.7);
+}
+
+.detail-grid dt {
+  margin-bottom: 4px;
+  color: #9aa4c0;
+  font-size: 0.8rem;
+}
+
+.detail-grid dd {
+  color: #f4f6ff;
+  font-size: 0.95rem;
+  overflow-wrap: anywhere;
+}
+
+.detail-disclaimer {
+  padding: 12px 14px;
+  color: #c9d1f0;
+  background: #1a2240;
+  border-left: 3px solid #8a9bed;
+  font-size: 0.85rem;
 }
 
 .pagination {
@@ -388,6 +478,14 @@ main {
 
   .summary-card p {
     font-size: 1rem;
+  }
+
+  .detail-dialog-content {
+    padding: 18px;
+  }
+
+  .detail-grid {
+    grid-template-columns: 1fr;
   }
 
   .filters {

@@ -77,6 +77,29 @@
     <section class="data-table-section" id="data-table-section">
       <!-- asteroid table will go here in a later phase -->
     </section>
+
+    <dialog class="detail-dialog" id="asteroid-detail-dialog" aria-labelledby="detail-name">
+      <div class="detail-dialog-content">
+        <div class="detail-header">
+          <div>
+            <p class="detail-kicker">Close approach record</p>
+            <h2 id="detail-name"></h2>
+          </div>
+          <button class="detail-close" id="close-detail-dialog" type="button">Close</button>
+        </div>
+        <dl class="detail-grid">
+          <div><dt>Designation</dt><dd id="detail-designation"></dd></div>
+          <div><dt>Historical / Upcoming</dt><dd id="detail-category"></dd></div>
+          <div><dt>Close Approach Date</dt><dd id="detail-date"></dd></div>
+          <div><dt>Close Approach Time</dt><dd id="detail-time"></dd></div>
+          <div><dt>Miss Distance from Earth</dt><dd id="detail-distance"></dd></div>
+          <div><dt>Speed Relative to Earth</dt><dd id="detail-velocity"></dd></div>
+          <div><dt>Orbit ID</dt><dd id="detail-orbit"></dd></div>
+          <div><dt>Diameter</dt><dd id="detail-diameter"></dd></div>
+        </dl>
+        <p class="detail-disclaimer">This information describes a close approach and should not be interpreted as an impact prediction.</p>
+      </div>
+    </dialog>
   </main>
 
   <footer class="site-footer">
@@ -88,6 +111,7 @@
   <script src="js/utils.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
   <script src="js/summary.js"></script>
+  <script src="js/details.js"></script>
   <script src="js/table.js"></script>
   <script src="js/charts.js"></script>
   <script src="js/filters.js"></script>

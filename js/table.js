@@ -21,7 +21,7 @@ function formatStatus(category) {
   return category === 'historical' ? 'Historical' : 'Upcoming';
 }
 
-function buildTableRow(record) {
+function buildTableRow(record, recordIndex) {
   return `
     <tr>
       <td>${record.fullname}</td>
@@ -29,6 +29,7 @@ function buildTableRow(record) {
       <td>${formatDistanceFromAU(record.missDistanceAU)}</td>
       <td>${formatVelocityFromKmPerSecond(record.relativeVelocityKmS)}</td>
       <td>${formatStatus(record.category)}</td>
+      <td><button class="view-details-btn" type="button" data-record-index="${recordIndex}">View details</button></td>
     </tr>
   `;
 }
@@ -132,7 +133,7 @@ function renderTable() {
 
   const startIndex = (tableState.currentPage - 1) * ROWS_PER_PAGE;
   const rowsToShow = sortedRecords.slice(startIndex, startIndex + ROWS_PER_PAGE);
-  const rowsHtml = rowsToShow.map(buildTableRow).join('');
+  const rowsHtml = rowsToShow.map((record, index) => buildTableRow(record, startIndex + index)).join('');
 
   container.innerHTML = `
     <p class="table-note">Showing ${startIndex + 1}-${startIndex + rowsToShow.length} of ${sortedRecords.length} close approaches.</p>
@@ -146,6 +147,7 @@ function renderTable() {
             <th class="sortable${getSortHeaderClass('distance')}" data-column="distance" aria-sort="${getSortAriaValue('distance')}">Miss Distance from Earth${getSortArrow('distance')}</th>
             <th class="sortable${getSortHeaderClass('velocity')}" data-column="velocity" aria-sort="${getSortAriaValue('velocity')}">Speed Relative to Earth${getSortArrow('velocity')}</th>
             <th>Historical / Upcoming</th>
+            <th>Details</th>
           </tr>
         </thead>
         <tbody>
@@ -157,6 +159,10 @@ function renderTable() {
 
   container.querySelectorAll('.sortable').forEach((header) => {
     header.addEventListener('click', () => handleHeaderClick(header.dataset.column));
+  });
+
+  container.querySelectorAll('.view-details-btn').forEach((button) => {
+    button.addEventListener('click', () => openAsteroidDetails(sortedRecords[Number(button.dataset.recordIndex)]));
   });
 
   const prevBtn = document.getElementById('prev-page-btn');
